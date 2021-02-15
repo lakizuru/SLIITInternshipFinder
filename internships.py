@@ -1,19 +1,21 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-from  datetime import datetime
+from  datetime import date, timedelta
 
 #datetime.now().strftime("%a, %d %b %Y, %I:%M %p")
+dateWeekAgo = date.today() - timedelta(days = 7)
 
-yearIn = 2021
-monthIn = 1
-dateIn = 1
+yearIn = int(dateWeekAgo.strftime("%Y"))
+monthIn = int(dateWeekAgo.strftime("%m"))
 
 passfile = open('pass.txt', 'r')
 password = passfile.read()
 passfile.close()
 
-browser = Chrome(options= Options().set_headless())
+opts = Options()
+opts.headless = True
+browser = Chrome(options= opts)
 
 browser.get('https://courseweb.sliit.lk/login/index.php')
 
@@ -42,11 +44,9 @@ for x in soup.findAll('td', attrs={'class': 'topic starter'}):
         startIndex = opportunity.find('20')
         year = int(opportunity[startIndex:startIndex+4])
         month = int(opportunity[startIndex+6:startIndex+7])
-        date = int(opportunity[startIndex+9:startIndex+10])
         if year >= yearIn:
             if month >= monthIn:
-                if date >= dateIn:
-                    opportunities.append(opportunity)
+                opportunities.append(opportunity)
         else:
             break
 
