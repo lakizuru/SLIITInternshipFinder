@@ -9,9 +9,10 @@ dateWeekAgo = date.today() - timedelta(days = 7)
 yearIn = int(dateWeekAgo.strftime("%Y"))
 monthIn = int(dateWeekAgo.strftime("%m"))
 
-passfile = open('pass.txt', 'r')
-password = passfile.read()
-passfile.close()
+credFile = open('credentials.txt', 'r')
+username = credFile.readline()
+password = credFile.readline()
+credFile.close()
 
 opts = Options()
 opts.headless = True
@@ -20,7 +21,7 @@ browser = Chrome(options= opts)
 browser.get('https://courseweb.sliit.lk/login/index.php')
 
 usernameTextBox = browser.find_element_by_xpath('//*[@id="username"]')
-usernameTextBox.send_keys('IT19051130')
+usernameTextBox.send_keys(username)
 
 passwordTextBox = browser.find_element_by_xpath('//*[@id="password"]')
 passwordTextBox.send_keys(password)
