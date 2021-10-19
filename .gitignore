@@ -1,1 +1,5 @@
-pass.txt
+# password file
+/Credentials.txt
+
+# Web Drivers
+/msedgedriver.exe
