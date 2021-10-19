@@ -1,5 +1,4 @@
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
 from bs4 import BeautifulSoup
 from  datetime import date, timedelta
 
@@ -9,14 +8,12 @@ dateWeekAgo = date.today() - timedelta(days = 7)
 yearIn = int(dateWeekAgo.strftime("%Y"))
 monthIn = int(dateWeekAgo.strftime("%m"))
 
-credFile = open('credentials.txt', 'r')
-username = credFile.readline()
-password = credFile.readline()
+credFile = open('Credentials.txt', 'r')
+username = credFile.readline().strip()
+password = credFile.readline().strip()
 credFile.close()
 
-opts = Options()
-opts.headless = True
-browser = Chrome(options= opts)
+browser = webdriver.Edge(r"./msedgedriver.exe")
 
 browser.get('https://courseweb.sliit.lk/login/index.php')
 
@@ -25,6 +22,7 @@ usernameTextBox.send_keys(username)
 
 passwordTextBox = browser.find_element_by_xpath('//*[@id="password"]')
 passwordTextBox.send_keys(password)
+
 passwordTextBox.submit()
 
 browser.get('https://courseweb.sliit.lk/mod/forum/view.php?f=211&showall=1')
@@ -53,6 +51,6 @@ for x in soup.findAll('td', attrs={'class': 'topic starter'}):
 
 for y in opportunities:
     listFile.write(y + '\n')
+    print(y)
 
 listFile.close()
-
